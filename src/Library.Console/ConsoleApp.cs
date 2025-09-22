@@ -18,7 +18,7 @@ public class ConsoleApp
     IPatronService _patronService;
     JsonData _jsonData;
 
-    public ConsoleApp(ILoanService loanService, IPatronService patronService, IPatronRepository patronRepository, ILoanRepository loanRepository)
+    public ConsoleApp(ILoanService loanService, IPatronService patronService, IPatronRepository patronRepository, ILoanRepository loanRepository, JsonData jsonData)
     {
         _patronRepository = patronRepository;
         _loanRepository = loanRepository;
@@ -283,7 +283,7 @@ public class ConsoleApp
         throw new InvalidOperationException("An input option is not handled.");
     }
 
-    async Task<ConsoleState> SearchBooks()
+    private async Task<ConsoleState> SearchBooks()
     {
         string bookTitle = ReadBookTitle();
 
@@ -307,5 +307,16 @@ public class ConsoleApp
         }
 
         return ConsoleState.PatronDetails;
+    }
+
+    static string ReadBookTitle()
+    {
+        string? bookTitle = null;
+        while (string.IsNullOrWhiteSpace(bookTitle))
+        {
+            Console.Write("Enter a book title to search: ");
+            bookTitle = Console.ReadLine();
+        }
+        return bookTitle;
     }
 }
